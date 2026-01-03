@@ -5,6 +5,7 @@
 class Step {
     #id = crypto.randomUUID();
     #description;
+    #done;
 
     /** 
      * @returns {string} The id of the step.
@@ -28,6 +29,20 @@ class Step {
             throw new TypeError('Description must be a non-empty string.');
         }
         this.#description = value;
+    }
+
+    /** 
+     * @returns {boolean} The status of the task.
+     */
+    get done() {
+        return this.#done;
+    }
+
+    /**
+     * Toggles the status of the task.
+     */
+    toggleDone() {
+        this.#done = !this.#done;
     }
 
     /**

@@ -5,6 +5,7 @@ import { Task } from "./task";
  */
 class List {
     #id = crypto.randomUUID();
+    #name;
     #tasks = [];
 
     /** 
@@ -12,6 +13,18 @@ class List {
      */
     get id() {
         return this.#id;
+    }
+
+    get name() {
+        return this.#name;
+    }
+
+    set name(value) {
+        if (typeof value !== 'string' || value.trim().length < 2) {
+            throw new TypeError('Name must be a string of minimum two characters');
+        }
+
+        this.#name = value;
     }
 
     /**
@@ -38,6 +51,13 @@ class List {
      */
     removeTask(id) {
         this.#tasks = this.#tasks.filter(t => t.id !== id);
+    }
+
+    /**
+     *
+     */
+    constructor(name) {
+        this.name = name;
     }
 }
 

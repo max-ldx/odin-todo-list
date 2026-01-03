@@ -1,21 +1,19 @@
 import './style.css';
-import { Step } from './domain/step';
-import { Task } from './domain/task';
-import { Priority } from './domain/priority';
-import { List } from './domain/list';
+import { ListController } from './controllers/list-controller'
+import { ListRepository } from './repositories/list-repository';
+import { ListView } from './views/list-view';
 
-const stepOne = new Step({ description: 'Test description' });
-const taskOne = new Task({ title: 'Test', description: 'test', dueDate: new Date(2026, 5, 1,), priority: Priority.HIGH })
-const listOne = new List();
-listOne.addTask(taskOne);
-taskOne.addStep(stepOne);
+// Setup Lucide icons
+lucide.createIcons();
 
-console.log(stepOne)
-console.log(taskOne);
-console.log(listOne);
+// TODO: retrieve from local storage
 
-taskOne.removeStep(stepOne.id);
-listOne.removeTask(taskOne.id);
+// Setup in-memory storage
+const listRepository = new ListRepository();
 
-console.log(taskOne);
-console.log(listOne);
+// Setup list controller
+const listController = new ListController(listRepository);
+
+// TODO: setup event listeners to list controller
+const listView = new ListView(listController);
+

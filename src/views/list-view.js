@@ -1,4 +1,5 @@
 import { ListDTO } from "../dtos/list-dto";
+import { createElement, SquareX } from "lucide";
 
 class ListView {
     #listController;
@@ -19,12 +20,11 @@ class ListView {
             dialogTitleElement.textContent = 'New list';
             dialogElement.appendChild(dialogTitleElement);
 
-            // const dialogCloseElement = document.createElement('i');
-            // dialogCloseElement.setAttribute('data-lucide', 'square-x');
-            // dialogCloseElement.addEventListener('click', e => {
-            //     dialogElement.close();
-            // })
-            // dialogElement.appendChild(dialogCloseElement);
+            const dialogCloseElement = createElement(SquareX);
+            dialogCloseElement.addEventListener('click', e => {
+                dialogElement.close();
+            })
+            dialogElement.appendChild(dialogCloseElement);
 
             const dialogFormElement = document.createElement('form');
             dialogElement.appendChild(dialogFormElement);

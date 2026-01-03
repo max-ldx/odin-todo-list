@@ -2,10 +2,9 @@ import './style.css';
 import { ListController } from './controllers/list-controller'
 import { ListRepository } from './repositories/list-repository';
 import { ListView } from './views/list-view';
+import { createStaticIcons } from './lib/icons';
 
-// Setup Lucide icons
-lucide.createIcons();
-
+createStaticIcons();
 // TODO: retrieve from local storage
 
 // Setup in-memory storage

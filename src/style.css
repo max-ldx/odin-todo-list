@@ -91,6 +91,18 @@ body {
     height: 1px;
 }
 
-.form-group {
-    
+.form-group {}
+
+.list {
+    width: 100%;
+    height: 3rem;
+    color: var(--text-primary);
+    border-radius: var(--radius-m);
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-unit);
+}
+
+.list:hover {
+    background-color: var(--primary-hover);
 }

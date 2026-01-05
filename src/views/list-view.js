@@ -61,7 +61,7 @@ class ListView {
                 if (result.error) {
                     console.log(result.message);
                 } else {
-                    console.log(this.#listController.getLists());
+                    this.#displayLists();
                     dialogElement.close();
                 }
             });
@@ -72,6 +72,20 @@ class ListView {
 
             dialogElement.showModal();
         });
+    }
+
+    #displayLists() {
+        const lists = this.#listController.getLists();
+
+        const containerElement = document.querySelector('.lists');
+        containerElement.textContent = null;
+
+        for (const list of lists) {
+            const listElement = document.createElement('div');
+            listElement.textContent = list.name;
+            listElement.classList.add('list');
+            containerElement.appendChild(listElement)
+        }
     }
 }
 

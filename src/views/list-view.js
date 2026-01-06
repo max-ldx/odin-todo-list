@@ -1,5 +1,5 @@
 import { ListDTO } from "../dtos/list-dto";
-import { createElement, SquareX } from "lucide";
+import { createElement, SquareX, Pencil, Trash } from "lucide";
 
 class ListView {
     #listController;
@@ -84,7 +84,20 @@ class ListView {
             const listElement = document.createElement('div');
             listElement.textContent = list.name;
             listElement.classList.add('list');
-            containerElement.appendChild(listElement)
+
+            const editIconElement = createElement(Pencil);
+            editIconElement.addEventListener('click', () => {
+                console.log('todo: open edit form modal')
+            });
+            listElement.appendChild(editIconElement);
+
+            const deleteIconElement = createElement(Trash);
+            deleteIconElement.addEventListener('click', () => {
+                console.log('todo: open delete modal')
+            });
+            listElement.appendChild(deleteIconElement);
+
+            containerElement.appendChild(listElement);
         }
     }
 }

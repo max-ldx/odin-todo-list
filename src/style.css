@@ -100,9 +100,14 @@ body {
     border-radius: var(--radius-m);
     display: flex;
     align-items: center;
+    gap: var(--spacing-unit);
     padding: var(--spacing-unit);
 }
 
 .list:hover {
     background-color: var(--primary-hover);
+}
+
+.list > svg:first-of-type {
+    margin-left: auto;
 }

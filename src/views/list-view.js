@@ -88,12 +88,52 @@ class ListView {
             const editIconElement = createElement(Pencil);
             editIconElement.addEventListener('click', () => {
                 console.log('todo: open edit form modal')
+
             });
             listElement.appendChild(editIconElement);
 
             const deleteIconElement = createElement(Trash);
             deleteIconElement.addEventListener('click', () => {
-                console.log('todo: open delete modal')
+                const dialogElement = document.createElement('dialog');
+
+                const dialogTitleElement = document.createElement('h2');
+                dialogTitleElement.textContent = 'Delete list ?';
+                dialogElement.appendChild(dialogTitleElement);
+
+                const dialogCloseElement = createElement(SquareX);
+                dialogCloseElement.addEventListener('click', e => {
+                    dialogElement.close();
+                })
+                dialogElement.appendChild(dialogCloseElement);
+
+                const textElement = document.createElement('p');
+                textElement.textContent = 'This cannot be undone.';
+                dialogElement.appendChild(textElement);
+
+                const yesButton = document.createElement('button');
+                yesButton.textContent = 'Yes';
+                yesButton.addEventListener('click', () => {
+                    this.#listController.delete(list.id);
+                    dialogElement.close();
+                    this.#displayLists();
+                });
+                dialogElement.appendChild(yesButton);
+
+                const noButton = document.createElement('button');
+                noButton.textContent = 'no';
+                noButton.addEventListener('click', () => {
+                    dialogElement.close();
+                });
+                dialogElement.appendChild(noButton);
+
+                dialogElement.addEventListener('close', e => {
+                    dialogElement.remove();
+                });
+
+                const bodyElement = document.querySelector('body');
+                bodyElement.appendChild(dialogElement);
+
+                dialogElement.showModal();
             });
             listElement.appendChild(deleteIconElement);
 

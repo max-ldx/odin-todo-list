@@ -21,6 +21,10 @@ class ListController {
     getLists() {
         return this.#listRepository.getLists();
     }
+
+    delete(id) {
+        this.#listRepository.deleteList(id);
+    }
 }
 
 export { ListController };

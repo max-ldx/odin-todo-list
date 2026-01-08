@@ -1,7 +1,7 @@
 import './style.css';
-import { ListController } from './controllers/list-controller'
+import { createListController } from './controllers/list-controller'
 import { ListRepository } from './repositories/list-repository';
-import { ListView } from './views/list-view';
+import { setupAddListEventHandler } from './views/list-view';
 import { createStaticIcons } from './lib/icons';
 
 createStaticIcons();
@@ -11,8 +11,11 @@ createStaticIcons();
 const listRepository = new ListRepository();
 
 // Setup list controller
-const listController = new ListController(listRepository);
+const listController = createListController(listRepository);
 
-// TODO: setup event listeners to list controller
-const listView = new ListView(listController);
+await setupAddListEventHandler(listController);
 
+window.addEventListener('lists:updated', (e) => {
+    const lists = e.detail.lists;
+    console.log(lists);
+});

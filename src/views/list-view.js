@@ -1,145 +1,20 @@
-import { ListDTO } from "../dtos/list-dto";
-import { createElement, SquareX, Pencil, Trash } from "lucide";
+import { createDialog } from "../components/dialog";
 
-class ListView {
-    #listController;
-
-    constructor(listController) {
-        this.#listController = listController;
-        this.#initializeOnNewListEventHandler();
-    }
-
-    #initializeOnNewListEventHandler() {
-        const newListButtonElement = document.querySelector('.new-list-button');
-        const bodyElement = document.querySelector('body');
-
-        newListButtonElement.addEventListener('click', e => {
-            const dialogElement = document.createElement('dialog');
-
-            const dialogTitleElement = document.createElement('h2');
-            dialogTitleElement.textContent = 'New list';
-            dialogElement.appendChild(dialogTitleElement);
-
-            const dialogCloseElement = createElement(SquareX);
-            dialogCloseElement.addEventListener('click', e => {
-                dialogElement.close();
-            })
-            dialogElement.appendChild(dialogCloseElement);
-
-            const dialogFormElement = document.createElement('form');
-            dialogElement.appendChild(dialogFormElement);
-
-            const dialogFormGroupElement = document.createElement('div');
-            dialogFormGroupElement.classList.add('form-group');
-            dialogFormElement.appendChild(dialogFormGroupElement);
-
-            const nameLabelElement = document.createElement('label');
-            nameLabelElement.textContent = 'Name';
-            nameLabelElement.setAttribute('for', 'name');
-            dialogFormGroupElement.appendChild(nameLabelElement);
-
-            const nameInputElement = document.createElement('input');
-            nameInputElement.setAttribute('id', 'name');
-            nameInputElement.setAttribute('name', 'name');
-            nameInputElement.setAttribute('type', 'text');
-            nameInputElement.setAttribute('minlength', 2);
-            nameInputElement.setAttribute('required', '');
-            dialogFormGroupElement.appendChild(nameInputElement);
-
-            const addButtonElement = document.createElement('button');
-            addButtonElement.textContent = 'Submit';
-            dialogFormElement.appendChild(addButtonElement);
-
-            bodyElement.appendChild(dialogElement);
-
-            dialogFormElement.addEventListener('submit', e => {
-                e.preventDefault();
-
-                const nameInputElement = document.querySelector('#name');
-                const result = this.#listController.addList(new ListDTO(nameInputElement.value));
-
-                if (result.error) {
-                    console.log(result.message);
-                } else {
-                    this.#displayLists();
-                    dialogElement.close();
-                }
-            });
-
-            dialogElement.addEventListener('close', e => {
-                dialogElement.remove();
-            });
-
-            dialogElement.showModal();
-        });
-    }
-
-    #displayLists() {
-        const lists = this.#listController.getLists();
-
-        const containerElement = document.querySelector('.lists');
-        containerElement.textContent = null;
-
-        for (const list of lists) {
-            const listElement = document.createElement('div');
-            listElement.textContent = list.name;
-            listElement.classList.add('list');
-
-            const editIconElement = createElement(Pencil);
-            editIconElement.addEventListener('click', () => {
-                console.log('todo: open edit form modal')
-
-            });
-            listElement.appendChild(editIconElement);
-
-            const deleteIconElement = createElement(Trash);
-            deleteIconElement.addEventListener('click', () => {
-                const dialogElement = document.createElement('dialog');
-
-                const dialogTitleElement = document.createElement('h2');
-                dialogTitleElement.textContent = 'Delete list ?';
-                dialogElement.appendChild(dialogTitleElement);
-
-                const dialogCloseElement = createElement(SquareX);
-                dialogCloseElement.addEventListener('click', e => {
-                    dialogElement.close();
-                })
-                dialogElement.appendChild(dialogCloseElement);
-
-                const textElement = document.createElement('p');
-                textElement.textContent = 'This cannot be undone.';
-                dialogElement.appendChild(textElement);
-
-                const yesButton = document.createElement('button');
-                yesButton.textContent = 'Yes';
-                yesButton.addEventListener('click', () => {
-                    this.#listController.delete(list.id);
-                    dialogElement.close();
-                    this.#displayLists();
-                });
-                dialogElement.appendChild(yesButton);
-
-                const noButton = document.createElement('button');
-                noButton.textContent = 'no';
-                noButton.addEventListener('click', () => {
-                    dialogElement.close();
-                });
-                dialogElement.appendChild(noButton);
-
-                dialogElement.addEventListener('close', e => {
-                    dialogElement.remove();
-                });
-
-                const bodyElement = document.querySelector('body');
-                bodyElement.appendChild(dialogElement);
-
-                dialogElement.showModal();
-            });
-            listElement.appendChild(deleteIconElement);
-
-            containerElement.appendChild(listElement);
+async function setupAddListEventHandler(listController) {
+    const addListButtonElement = document.querySelector('.new-list-button');
+    addListButtonElement.addEventListener('click', async () => {
+        const data = await showAddListModal();
+        if (data !== null) {
+            listController.addList(data.listName);
         }
-    }
+    });
 }
 
-export { ListView };
+async function showAddListModal() {
+    return await createDialog({
+        title: 'Add add list',
+        content: `<input type="text" name="listName" placeholder="List name" required>`
+    });
+}
+
+export { setupAddListEventHandler }; 

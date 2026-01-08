@@ -1,30 +1,31 @@
 import { List } from '../models/list';
 
-class ListController {
-    #listRepository;
+export function createListController(listRepository) {
+    const notify = () => {
+        const event = new CustomEvent('lists:updated', {
+            detail: { lists: listRepository.getLists() }
+        });
+        window.dispatchEvent(event);
+    };
 
-    constructor(listRepository) {
-        this.#listRepository = listRepository;
-    }
+    return {
+        addList(name) {
+            try {
+                const list = new List(name);
+                listRepository.addList(list);
+                notify();
+            } catch (error) {
+                console.log(error);
+            }
+        },
 
-    addList(listDTO) {
-        try {
-            const list = new List(listDTO.name);
-            this.#listRepository.addList(list);
-            // Save to local storage
-            return { error: false, message: '' };
-        } catch (error) {
-            return { error: true, message: error.message };
+        getLists() {
+            return listRepository.getLists();
+        },
+
+        delete(id) {
+            listRepository.deleteList(id);
+            notify();
         }
-    }
-
-    getLists() {
-        return this.#listRepository.getLists();
-    }
-
-    delete(id) {
-        this.#listRepository.deleteList(id);
-    }
+    };
 }
-
-export { ListController };

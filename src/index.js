@@ -5,6 +5,7 @@ import { setupAddListEventHandler } from './views/list-view';
 import { createStaticIcons } from './lib/icons';
 import { createList } from './components/listComponent';
 import { createDOMCache } from './views/dom-cache';
+import { setupListClickedEventListener } from './views/task-view';
 
 createStaticIcons();
 const DOMCache = createDOMCache();
@@ -30,3 +31,5 @@ window.addEventListener('lists:updated', async e => {
         listsElement.appendChild(createList({ id: list.id, name: list.name }));
     }
 });
+
+setupListClickedEventListener();

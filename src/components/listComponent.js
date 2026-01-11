@@ -14,6 +14,8 @@ export function createList({ id = '', name = '' }) {
 
     list.classList.add('list');
 
+    list.addEventListener('click', () => notifyListClicked(id));
+
     edit.addEventListener('click', async () => {
         const data = await showEditListModal({ name: name });
         if (data !== null) {
@@ -28,7 +30,16 @@ export function createList({ id = '', name = '' }) {
         }
     });
 
+    // On click, notify list clicked to render its content
+
     return list;
+}
+
+function notifyListClicked(id) {
+    const event = new CustomEvent('list:clicked', {
+        detail: { id: id }
+    });
+    window.dispatchEvent(event);
 }
 
 async function showEditListModal({ name = '' }) {

@@ -9,8 +9,12 @@ class ListRepository {
         return [...this.#lists];
     }
 
-    updateList(list) {
-        // TODO
+    updateList({ id = '', name = '' }) {
+        for (const list of this.#lists) {
+            if (list.id === id) {
+                list.name = name;
+            }
+        }
     }
 
     deleteList(id) {

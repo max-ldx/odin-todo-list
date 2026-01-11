@@ -3,8 +3,11 @@ import { createListController } from './controllers/list-controller'
 import { ListRepository } from './repositories/list-repository';
 import { setupAddListEventHandler } from './views/list-view';
 import { createStaticIcons } from './lib/icons';
+import { createList } from './components/listComponent';
+import { createDOMCache } from './views/dom-cache';
 
 createStaticIcons();
+const DOMCache = createDOMCache();
 // TODO: retrieve from local storage
 
 // Setup in-memory storage
@@ -15,7 +18,13 @@ const listController = createListController(listRepository);
 
 await setupAddListEventHandler(listController);
 
-window.addEventListener('lists:updated', (e) => {
+window.addEventListener('lists:updated', e => {
+    const listsElement = DOMCache.get('lists');
+
     const lists = e.detail.lists;
-    console.log(lists);
+
+    for (const list of lists) {
+        listsElement.appendChild(createList({ name: list.name }));
+    }
+    // save to local storage
 });

@@ -1,4 +1,4 @@
-import { createDialog } from "../components/dialog";
+import { createDialog } from "../components/dialogComponent";
 
 async function setupAddListEventHandler(listController) {
     const addListButtonElement = document.querySelector('.new-list-button');

@@ -18,13 +18,14 @@ const listController = createListController(listRepository);
 
 await setupAddListEventHandler(listController);
 
-window.addEventListener('lists:updated', e => {
+window.addEventListener('lists:updated', async e => {
     const listsElement = DOMCache.get('lists');
+    listsElement.textContent = null;
 
     const lists = e.detail.lists;
 
     for (const list of lists) {
-        listsElement.appendChild(createList({ name: list.name }));
+        listsElement.appendChild(await createList({ id: list.id, name: list.name }));
     }
     // save to local storage
 });

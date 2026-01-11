@@ -1,12 +1,23 @@
 import { List } from '../models/list';
 
 export function createListController(listRepository) {
+    window.addEventListener('list:deleted', e => {
+        const id = e.detail.id;
+        deleteList(id);
+    });
+
+
     const notify = () => {
         const event = new CustomEvent('lists:updated', {
             detail: { lists: listRepository.getLists() }
         });
         window.dispatchEvent(event);
     };
+
+    function deleteList(id) {
+        listRepository.deleteList(id);
+        notify()
+    }
 
     return {
         addList(name) {
@@ -23,9 +34,6 @@ export function createListController(listRepository) {
             return listRepository.getLists();
         },
 
-        delete(id) {
-            listRepository.deleteList(id);
-            notify();
-        }
+
     };
 }

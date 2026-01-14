@@ -1,4 +1,4 @@
-export function createTask({ name = '', description = '' } = {}) {
+export function createTask({ name = '', description = '', dueDate = Date.now(), priority = 1 } = {}) {
     const id = crypto.randomUUID();
     let completed = false;
 
@@ -17,6 +17,18 @@ export function createTask({ name = '', description = '' } = {}) {
         },
         set description(value) {
             description = value;
+        },
+        get dueDate() {
+            return dueDate;
+        },
+        set dueDate(value) {
+            dueDate = value;
+        },
+        get priority() {
+            return priority;
+        },
+        set priority(value) {
+            priority = value;
         },
         get completed() {
             return completed;

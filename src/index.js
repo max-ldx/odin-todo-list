@@ -1,3 +1,6 @@
+import { createListController } from "./controllers/list-controller";
+import { EventBus } from "./event-bus";
+
 const addListBtn = document.querySelector('#add-list-btn');
 const addListDialog = document.querySelector('#add-list-dialog');
 const addListForm = document.querySelector('#add-list-form');
@@ -8,7 +11,11 @@ addListDialog.addEventListener('close', () => {
     if (addListDialog.returnValue === 'add') {
         const data = new FormData(addListForm);
         const values = Object.fromEntries(data.entries());
-        console.log(values);
-        // TODO: dispatch custom event with values
+        const event = new CustomEvent('ui:add-list', {
+            detail: values
+        });
+        EventBus.dispatchEvent(event);
     }
 });
+
+createListController();

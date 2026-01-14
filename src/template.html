@@ -8,7 +8,15 @@
 </head>
 
 <body>
-
+    <button id="add-list-btn">Add List</button>
+    <dialog id="add-list-dialog">
+        <form id="add-list-form" method="dialog">
+            <label for="list-name">Name</label>
+            <input id="list-name" name="list-name" type="text" required>
+            <button value="close" formnovalidate>Close</button>
+            <button value="add">Add</button>
+        </form>
+    </dialog>
 </body>
 
 </html>

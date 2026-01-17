@@ -21,6 +21,10 @@ export function createStorage() {
             lists.push(...newLists);
             save();
         },
+        deleteList(id) {
+            lists = lists.filter(l => l.id !== id);
+            save();
+        },
         getLists() {
             return [...lists];
         }

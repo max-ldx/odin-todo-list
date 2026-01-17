@@ -11,7 +11,7 @@ export function createList({
         get id() { return id; },
         get name() { return name; },
         get tasks() { return [...taskInstances]; },
-        addTask(task) { taskInstances.push(task); },
+        addTask(...newTasks) { taskInstances.push(...newTasks); },
         toJSON() {
             return { id, name, tasks: taskInstances.map(t => t.toJSON()) };
         }

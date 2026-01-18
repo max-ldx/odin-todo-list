@@ -11,7 +11,9 @@ export function createListController(storage) {
     });
 
     window.addEventListener('ui:delete-list', e => {
+        console.log(e)
         const id = storage.deleteList(e.detail);
+        console.log(id)
         if (id !== null) {
             const event = new CustomEvent('ctrl:list-deleted', {
                 detail: id

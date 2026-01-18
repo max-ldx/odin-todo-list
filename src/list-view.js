@@ -4,6 +4,7 @@ export function createListView() {
     const listsContainer = document.querySelector('#lists');
 
     window.addEventListener('ctrl:list-added', e => {
+        const id = e.detail.id;
         const listElement = document.createElement('li');
         const listNameElement = document.createElement('span');
         listNameElement.textContent = e.detail.name;
@@ -14,7 +15,7 @@ export function createListView() {
         deleteIcon.addEventListener('click', e => {
             e.stopPropagation();
             const event = new CustomEvent('ui:delete-list', {
-                detail: e.detail.id
+                detail: id  
             });
             window.dispatchEvent(event);
         });
@@ -25,7 +26,7 @@ export function createListView() {
 
     window.addEventListener('ctrl:list-deleted', e => {
         const toDelete = document.querySelector(`[data-id="${e.detail}"]`);
-
+    
         if (toDelete) {
             toDelete.remove();
         }

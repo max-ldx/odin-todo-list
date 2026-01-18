@@ -22,10 +22,15 @@ export function createStorage() {
             save();
         },
         deleteList(id) {
+            console.log(id)
             const length = lists.length;
             lists = lists.filter(l => l.id !== id);
             save();
-            return length !== lists.length ? id : null;
+            if (length !== lists.length) {
+                return id;
+            } else {
+                return null;
+            }
         },
         getLists() {
             return [...lists];

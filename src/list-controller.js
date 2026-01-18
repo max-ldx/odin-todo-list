@@ -9,4 +9,14 @@ export function createListController(storage) {
         });
         window.dispatchEvent(event);
     });
+
+    window.addEventListener('ui:delete-list', e => {
+        const id = storage.deleteList(e.detail);
+        if (id !== null) {
+            const event = new CustomEvent('ctrl:list-deleted', {
+                detail: id
+            });
+            window.dispatchEvent(event);
+        }
+    });
 }

@@ -22,8 +22,10 @@ export function createStorage() {
             save();
         },
         deleteList(id) {
+            const length = lists.length;
             lists = lists.filter(l => l.id !== id);
             save();
+            return length !== lists.length ? id : null;
         },
         getLists() {
             return [...lists];

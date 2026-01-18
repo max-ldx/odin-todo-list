@@ -11,7 +11,8 @@ export function createListView() {
 
         listElement.appendChild(listNameElement);
         listElement.appendChild(deleteIcon);
-        deleteIcon.addEventListener('click', () => {
+        deleteIcon.addEventListener('click', e => {
+            e.stopPropagation();
             const event = new CustomEvent('ui:delete-list', {
                 detail: e.detail.id
             });

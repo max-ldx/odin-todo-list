@@ -4,6 +4,7 @@ import { createListController } from "./list-controller";
 import { createListView } from "./list-view";
 import { createSeeder } from "./seeder";
 import { createStorage } from "./storage";
+import { createTaskView } from "./task-view";
 
 const storage = createStorage();
 // if (storage.getLists().length === 0) {
@@ -24,3 +25,4 @@ const storage = createStorage();
 createAddListDialog();
 createListController(storage);
 createListView();
+createTaskView();

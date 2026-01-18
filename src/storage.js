@@ -22,7 +22,6 @@ export function createStorage() {
             save();
         },
         deleteList(id) {
-            console.log(id)
             const length = lists.length;
             lists = lists.filter(l => l.id !== id);
             save();
@@ -34,6 +33,9 @@ export function createStorage() {
         },
         getLists() {
             return [...lists];
+        },
+        getList(id) {
+            return lists.find(l => l.id === id);
         }
     }
 }

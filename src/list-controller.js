@@ -19,4 +19,14 @@ export function createListController(storage) {
             window.dispatchEvent(event);
         }
     });
+
+    window.addEventListener('ui:get-list', e => {
+        const list = storage.getList(e.detail);
+        if(list) {
+            const event = new CustomEvent('ctrl:list-get', {
+                detail: list
+            });
+            window.dispatchEvent(event);
+        }
+    })
 }

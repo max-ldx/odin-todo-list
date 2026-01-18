@@ -20,6 +20,13 @@ export function createListView() {
             window.dispatchEvent(event);
         });
 
+        listElement.addEventListener('click', () => {
+            const event = new CustomEvent('ui:list-clicked', {
+                detail: id
+            });
+            window.dispatchEvent(event);
+        });
+
         listElement.dataset.id = e.detail.id;
         listsContainer.appendChild(listElement);
     });

@@ -1,4 +1,6 @@
+import './style.css';
 import { createAddListDialog } from "./add-list-dialog";
+import { createAddTaskDialog } from "./add-task-dialog";
 import { createList } from "./list";
 import { createListController } from "./list-controller";
 import { createListView } from "./list-view";
@@ -23,6 +25,7 @@ const storage = createStorage();
 // }
 
 createAddListDialog();
+createAddTaskDialog();
 createListController(storage);
 createListView();
 createTaskView();

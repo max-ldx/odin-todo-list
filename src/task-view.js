@@ -22,6 +22,10 @@ export function createTaskView() {
         // On click, send custom event to open add task modal with list id
         const addTaskBtnElement = document.createElement('button');
         addTaskBtnElement.textContent = 'Add Task';
+        addTaskBtnElement.addEventListener('click', () => {
+            const event = new CustomEvent('ui:add-task-modal');
+            window.dispatchEvent(event);
+        });
         main.appendChild(addTaskBtnElement);
 
 

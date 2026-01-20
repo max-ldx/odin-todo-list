@@ -1,0 +1,12 @@
+dialog>div {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+
+    &>form {
+        display: flex;
+        flex-direction: column;
+        gap: .5rem;
+    }
+}

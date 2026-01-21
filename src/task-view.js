@@ -23,11 +23,12 @@ export function createTaskView() {
         const addTaskBtnElement = document.createElement('button');
         addTaskBtnElement.textContent = 'Add Task';
         addTaskBtnElement.addEventListener('click', () => {
-            const event = new CustomEvent('ui:add-task-modal');
+            const event = new CustomEvent('ui:add-task-modal', {
+                detail: list.id
+            });
             window.dispatchEvent(event);
         });
         main.appendChild(addTaskBtnElement);
-
 
 
         const tasksContainer = document.createElement('div');

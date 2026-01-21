@@ -1,10 +1,11 @@
 export function createAddTaskDialog() {
-    window.addEventListener('ui:add-task-modal', () => {
+    window.addEventListener('ui:add-task-modal', e => {
+        const listId = e.detail;
         const addTaskDialog = document.querySelector('#addTaskDialog');
         const taskForm = document.querySelector('#addTaskForm');
         addTaskDialog.showModal();
 
-        addTaskDialog.addEventListener('close', () => {
+        addTaskDialog.addEventListener('close', e => {
             if (addTaskDialog.returnValue === 'confirm') {
                 const formData = new FormData(taskForm);
                 const taskName = formData.get('taskName');
@@ -13,6 +14,7 @@ export function createAddTaskDialog() {
                 const taskPriority = formData.get('taskPriority')
                 const event = new CustomEvent('ui:add-task', {
                     detail: {
+                        listId,
                         taskName,
                         taskDescription,
                         taskDueDate,

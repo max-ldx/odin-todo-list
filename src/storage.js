@@ -36,6 +36,11 @@ export function createStorage() {
         },
         getList(id) {
             return lists.find(l => l.id === id);
+        },
+        addTask(listId, task) {
+            const list = this.getList(listId);
+            list.addTask(task);
+            save();
         }
     }
 }

@@ -8,48 +8,6 @@
 </head>
 
 <body>
-    <div id="app">
-        <div class="sidebar">
-            <button id="addListBtn">Add List</button>
-            <ul id="lists"></ul>
-        </div>
-
-        <div class="main">
-
-        </div>
-    </div>
-    <dialog id="addListDialog">
-        <div>
-            <h3>Add List</h3>
-            <form method="dialog" id="addListForm">
-                <label for="listName">Name</label>
-                <input id="listName" name="listName" type="text" required>
-                <button type="submit" value="cancel" formnovalidate>Cancel</button>
-                <button type="submit" value="confirm">Submit</button>
-            </form>
-        </div>
-    </dialog>
-    <dialog id="addTaskDialog">
-        <div>
-            <h3>Add Task</h3>
-            <form method="dialog" id="addTaskForm">
-                <label for="taskName">Name</label>
-                <input id="taskName" name="taskName" type="text" required>
-                <label for="taskDescription">Description</label>
-                <textarea name="taskDescription" id="taskDescription"></textarea>
-                <label for="taskDueDate">Due Date</label>
-                <input type="datetime-local" name="taskDueDate" id="taskDueDate">
-                <label for="taskPriority">Priority</label>
-                <select name="taskPriority" id="taskPriority">
-                    <option value="3">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="1">High</option>
-                </select>
-                <button type="submit" value="cancel" formnovalidate>Cancel</button>
-                <button type="submit" value="confirm">Submit</button>
-            </form>
-        </div>
-    </dialog>
 </body>
 
 </html>

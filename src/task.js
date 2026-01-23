@@ -46,18 +46,33 @@ export class Task {
 
     // --- SETTERS WITH VALIDATION ---
 
+    // Inside Task.js
+
     set title(value) {
         if (!value || value.trim().length < 2) {
-            throw new Error("Title must contain at least 2 characters (excluding whitespace).");
+            throw new Error("Title must contain at least 2 characters.");
         }
         this.#title = value.trim();
     }
 
     set description(value) {
         if (!value || value.trim().length < 2) {
-            throw new Error("Description must contain at least 2 characters (excluding whitespace).");
+            throw new Error("Description must contain at least 2 characters.");
         }
         this.#description = value.trim();
+    }
+
+    set dueDate(value) {
+        const parsedDate = new Date(value);
+        if (isNaN(parsedDate.getTime())) {
+            throw new Error("The provided date is invalid.");
+        }
+        // Note: If you want to allow updating past tasks, 
+        // remove the future date check here or add a flag.
+        if (parsedDate <= new Date()) {
+            throw new Error("The due date must be in the future.");
+        }
+        this.#dueDate = parsedDate;
     }
 
     set priority(value) {
@@ -66,6 +81,10 @@ export class Task {
             throw new Error("Priority must be a number between 1 and 3.");
         }
         this.#priority = p;
+    }
+
+    set complete(value) {
+        this.#complete = Boolean(value);
     }
 
     // --- GETTERS ---

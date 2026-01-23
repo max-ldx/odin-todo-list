@@ -30,9 +30,11 @@ export class TaskList {
 
     // --- SETTERS WITH VALIDATION ---
 
+    // Inside TaskList.js
+
     set name(value) {
         if (!value || value.trim().length < 2) {
-            throw new Error("List name must contain at least 2 characters (excluding whitespace).");
+            throw new Error("List name must contain at least 2 characters.");
         }
         this.#name = value.trim();
     }

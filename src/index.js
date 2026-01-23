@@ -1,65 +1,70 @@
 import './style.css';
-
 import { TaskStore } from './taskStore.js';
 import { StorageManager } from './storageManager.js';
+import { UIManager } from './UIManager.js';
 
-async function runDemo() {
-    console.log("🚀 Starting Task System Demo...\n");
+/**
+ * INITIALISATION DU COEUR DE L'APPLICATION
+ */
 
-    // 1. INITIALIZATION
-    // Load data from LocalStorage and boot the store
-    const initialData = StorageManager.load();
-    const store = new TaskStore(initialData);
+// 1. Charger les données brutes du LocalStorage et les transformer en objets réels (Hydratation)
+const savedData = StorageManager.load();
 
-    // 2. THE OBSERVER
-    // Connect the storage manager to the store
-    store.subscribe(lists => {
-        StorageManager.save(lists);
-        console.log("💾 [StorageSubscriber] Data synced to LocalStorage.");
-    });
+// 2. Créer l'instance unique du Store avec les données chargées
+const store = new TaskStore(savedData);
 
-    console.log(`Current lists in store: ${store.lists.length}`);
+// 3. Abonner le StorageManager aux changements du Store
+// À chaque modification (ajout, suppression, édit), les données sont sauvegardées
+store.subscribe(lists => StorageManager.save(lists));
 
-    // 3. TESTING VALIDATIONS (The "Try/Catch" block)
-    console.log("\n🧪 Testing Validations...");
-    try {
-        store.addList("A"); // Too short!
-    } catch (error) {
-        console.log(`❌ Expected Error caught: "${error.message}"`);
-    }
+/**
+ * INITIALISATION DE L'INTERFACE UTILISATEUR
+ */
 
-    // 4. ADDING DATA
-    console.log("\n📝 Creating a new list and tasks...");
-    store.addList("Coding Project");
-    const myLists = store.lists;
-    const projectList = myLists[myLists.length - 1];
+// 4. Lancer le gestionnaire d'UI en lui passant le store
+const app = new UIManager(store);
 
-    store.addTask(projectList.id, {
-        title: "Setup Store",
-        description: "Implement the Observer pattern",
-        priority: 3,
-        dueDate: Date.now() + 10000000 // Future
-    });
+// 5. Rendre l'instance 'app' accessible globalement
+// Cela permet aux événements onclick="app.toggleTask(...)" du HTML de fonctionner
+window.app = app;
 
-    // 5. UPDATING DATA
-    console.log("\n🔄 Updating a task...");
-    const taskToUpdate = projectList.tasks[0];
-    store.updateTask(projectList.id, taskToUpdate.id, {
-        title: "Store is working!",
-        priority: 1
-    });
+/**
+ * DONNÉES PAR DÉFAUT (PREMIER LANCEMENT)
+ */
 
-    // 6. VERIFYING THE HYDRATION
-    console.log("\n🔍 Verifying Hydration...");
-    const rawDataFromStorage = JSON.parse(localStorage.getItem('app_task_data'));
-    console.log("Raw JSON in LocalStorage has Methods?", !!rawDataFromStorage[0].tasks[0].toggleComplete); // false
+// 6. Si l'utilisateur n'a aucune liste, on crée un exemple de bienvenue
+if (store.lists.length === 0) {
+    console.log("🛠️ Initialisation des données par défaut...");
+
+    // Création d'une liste par défaut
+    store.addList("🚀 Ma Première Liste");
     
-    // Now look at our Store (Hydrated)
-    const storeTask = store.lists[store.lists.length - 1].tasks[0];
-    console.log("Store Object has Methods?", !!storeTask.toggleComplete); // true
-    console.log(`Task Title: "${storeTask.title}" | Due Date is Date Object?`, storeTask.dueDate instanceof Date);
+    // Récupération de l'ID de la liste fraîchement créée
+    const defaultListId = store.lists[0].id;
 
-    console.log("\n✅ Demo finished. Check your Application tab in DevTools!");
+    // Ajout de tâches d'exemple
+    // On calcule une date à demain (J+1) pour la validation
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const dateStr = tomorrow.toISOString().split('T')[0];
+
+    store.addTask(defaultListId, {
+        title: "Bienvenue dans Task Manager",
+        description: "Cliquez sur une tâche pour la modifier ou sur le '+' pour créer une liste.",
+        priority: 2,
+        dueDate: dateStr
+    });
+
+    store.addTask(defaultListId, {
+        title: "Tester la persistance",
+        description: "Ajoutez des tâches et rafraîchissez la page : tout restera là !",
+        priority: 1,
+        dueDate: dateStr
+    });
+
+    // Sélectionner la liste par défaut et mettre à jour l'affichage
+    app.activeListId = defaultListId;
+    app.render();
 }
 
-runDemo();
+console.log("✅ Application démarrée avec succès.");

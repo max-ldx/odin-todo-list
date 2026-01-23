@@ -73,7 +73,7 @@ export class TaskStore {
         if (task) {
             // Apply updates by calling setters
             Object.keys(updates).forEach(key => {
-                if (key in task) {
+                if (key !== 'id' && key in task) {
                     task[key] = updates[key];
                 }
             });

@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack --config webpack.prod.js",
     "dev": "webpack serve --config webpack.dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix"
   },
   "repository": {
     "type": "git",
@@ -21,10 +23,9 @@
   },
   "homepage": "https://github.com/max-ldx/odin-todo-list#readme",
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "css-loader": "^7.1.5",
-    "eslint": "^10.10.0",
     "html-webpack-plugin": "^5.6.8",
+    "oxlint": "^1.81.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.110.2",
     "webpack-cli": "^7.2.3",

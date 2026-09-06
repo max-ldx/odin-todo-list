@@ -1,0 +1,121 @@
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+*:not(dialog) {
+    margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+/* Styling */
+:root {
+    --border-radius: .5rem;
+    --color-primary: #fafafd;
+    --color-secondary: #ffffff;
+    --color-tertiary: #f0f1f2;
+    --color-active: #d6d6d6;
+    --spacing-small: .25rem;
+}
+
+body {
+    display: grid;
+    height: 100vh;
+    background: var(--color-primary);
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 20rem 4fr;
+    gap: var(--spacing-small);
+    padding: var(--spacing-small);
+}
+
+.sidebar {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: var(--spacing-small);
+    border-radius: var(--border-radius);
+    padding: 8px;
+    border: 1px solid var(--color-tertiary);
+}
+
+.new-todo-button {}
+
+.project {
+    padding: .5rem;
+    background: none;
+    border: none;
+    border-radius: var(--border-radius);
+}
+
+.project:active {
+    background: var(--color-active);
+}
+
+.projects {
+    display: grid;
+    align-content: start;
+
+}
+
+.content {
+    background: var(--color-secondary);
+    border: 1px solid var(--color-tertiary);
+    border-radius: var(--border-radius);
+}
